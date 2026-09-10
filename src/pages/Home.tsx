@@ -1,12 +1,14 @@
 import RestaurantCard from "../components/RestaurantCard";
-import { mockRestaurants } from "../mock/restaurants";
+import { useRestaurants } from "../context/RestaurantContext";
 
 function Home() {
+  const { restaurants } = useRestaurants();
+
   return (
     <div>
       <h1>ホーム画面</h1>
       <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
-        {mockRestaurants.map((restaurant) => (
+        {restaurants.map((restaurant) => (
           <RestaurantCard key={restaurant.id} restaurant={restaurant} />
         ))}
       </div>
