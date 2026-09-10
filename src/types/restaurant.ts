@@ -4,4 +4,5 @@ export type Restaurant = {
   genre: string;
   area: string;
   imageUrl: string;
+  availableSlots?: string[];
 };
