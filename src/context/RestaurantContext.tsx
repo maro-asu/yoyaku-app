@@ -1,18 +1,22 @@
-import { createContext, useContext, useState } from "react";
+import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
 import type { Restaurant } from "../types/restaurant";
+import { RestaurantContext } from "./restaurantContextDef";
 
-type RestaurantContextType = {
-  restaurants: Restaurant[];
-  addRestaurant: (restaurant: Restaurant) => void;
-};
+const STORAGE_KEY = "restaurants";
 
-const RestaurantContext = createContext<RestaurantContextType | undefined>(
-  undefined
-);
+function loadRestaurants(): Restaurant[] {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (!saved) return [];
+  return JSON.parse(saved);
+}
 
 export function RestaurantProvider({ children }: { children: ReactNode }) {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>(loadRestaurants);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(restaurants));
+  }, [restaurants]);
 
   const addRestaurant = (restaurant: Restaurant) => {
     setRestaurants((prev) => [...prev, restaurant]);
@@ -23,14 +27,4 @@ export function RestaurantProvider({ children }: { children: ReactNode }) {
       {children}
     </RestaurantContext.Provider>
   );
-}
-
-export function useRestaurants() {
-  const context = useContext(RestaurantContext);
-  if (!context) {
-    throw new Error(
-      "useRestaurants must be used within a RestaurantProvider"
-    );
-  }
-  return context;
 }

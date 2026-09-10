@@ -1,5 +1,5 @@
 import RestaurantCard from "../components/RestaurantCard";
-import { useRestaurants } from "../context/RestaurantContext";
+import { useRestaurants } from "../context/useRestaurants";
 
 function Home() {
   const { restaurants } = useRestaurants();

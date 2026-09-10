@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import type { Restaurant } from "../types/restaurant";
 import "./RestaurantCard.css";
 
@@ -6,8 +7,14 @@ type Props = {
 };
 
 function RestaurantCard({ restaurant }: Props) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/restaurant/${restaurant.id}`);
+  };
+
   return (
-    <div className="restaurant-card">
+    <div className="restaurant-card" onClick={handleClick}>
       <img
         src={restaurant.imageUrl}
         alt={restaurant.name}

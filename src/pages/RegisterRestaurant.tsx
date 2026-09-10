@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRestaurants } from "../context/RestaurantContext";
+import { useRestaurants } from "../context/useRestaurants";
 
 function RegisterRestaurant() {
   const [name, setName] = useState("");
